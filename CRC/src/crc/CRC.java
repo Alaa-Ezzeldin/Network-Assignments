@@ -16,7 +16,71 @@ public class CRC {
     private ArrayList<Integer> reminder;
     private ArrayList <Integer> Message = new ArrayList<>();
     private ArrayList <Integer> Transmitted = new ArrayList<>();
+	
+	                                                       //Setters and getters
+    public ArrayList <Integer> getTransmitted() {
+        return Transmitted;
+    }
+
+    public ArrayList<Integer> getReminder() {
+        return reminder;
+    }
+
+    public void setReminder(ArrayList<Integer> reminder) {
+        this.reminder = reminder;
+    }
+
+    public ArrayList <Integer> getMessage() {
+        return Message;
+    }
+
+    public void setMessage(ArrayList <Integer> Message) {
+        this.Message = Message;
+    }
+
+    public void setTransmitted(ArrayList <Integer> Transmitted) {
+        this.Transmitted = Transmitted;
+    }
+
+	                                                        //generator function
+	public ArrayList Generator(ArrayList message, ArrayList poly){ 
+        CRC GenP=new CRC();
+        ArrayList <Integer> toBeTransmitted = new ArrayList<>();
+        ArrayList <Integer> Trans = new ArrayList<>();
+        
+        for(int i=0; i<message.size();i++){
+            toBeTransmitted.add((int) message.get(i));
+        }
+        
+        for(int i=0;i<poly.size()-1;i++){
+            toBeTransmitted.add(0);
+        }
+            
+        ArrayList <Integer> zeros = new ArrayList<>();
+        for(int i=0; i<poly.size();i++){
+            zeros.add(0);
+        }
+
+        while(toBeTransmitted.size()>=poly.size()){
+            if(toBeTransmitted.get(0)==1){
+                toBeTransmitted=GenP.Xor(toBeTransmitted, poly);
+            }
+            else{
+                toBeTransmitted=GenP.Xor(toBeTransmitted, zeros);
+            }
+
+        } 
+                this.setReminder(toBeTransmitted); 
+                Trans.addAll(message);
+                Trans.addAll(toBeTransmitted);
+                this.setTransmitted(Trans);
+
+        return Trans;
+    }
     
+
+	                                                          //Verifier function		
+															  
     public String verifier ( ArrayList message, ArrayList poly){
         CRC verP=new CRC();
         ArrayList <Integer> remainder = new ArrayList<>();
