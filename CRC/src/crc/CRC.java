@@ -100,6 +100,43 @@ public class CRC {
         }
         return Str;
     } 
+    public ArrayList Xor(ArrayList message, ArrayList poly){
+        for(int i=0; i<poly.size();i++){
+            if(message.get(i)==poly.get(i)){
+                message.set(i,0);
+            }
+            else{
+                message.set(i,1);
+            }
+        }
+        message.remove(0);
+        return message;
+    }
+
+
+
+
+
+public ArrayList Alter(ArrayList message,int location){
+        ArrayList <Integer> alterArray = new ArrayList<>();
+        
+        for(int i=0; i<message.size();i++){
+            int value=(int) message.get(i);
+            alterArray.add(value);
+        }
+        int newLoc =location-1;
+                
+        for(int i=0; i<alterArray.size();i++){
+            if(i==newLoc){
+                if(alterArray.get(newLoc)==0){
+                    alterArray.set(newLoc, 1);
+                }
+                else alterArray.set(newLoc, 0);
+                }
+            }
+        return alterArray;
+    }
+    
     
     public static void main(String[] args) throws FileNotFoundException {
         // TODO code application logic here
@@ -198,7 +235,7 @@ public class CRC {
                 try (PrintWriter out = new PrintWriter("VerifierOutput.txt")) {
                     out.println(verify);
                 }
-                System.out.println("verifier.txt is generated \n");
+                System.out.println("Verifier.txt is generated \n");
             }
             
             else{
